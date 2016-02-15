@@ -1,0 +1,23 @@
+
+//You can use any word in this program, I just used TACO, because tacos are AWESOME!
+#include <iostream>
+
+int Taco;
+
+int main() {
+
+std::cout << "How many tacos?: ";
+std::cin >> Taco;
+
+do
+{
+std::cout << " Taco ";
+Taco--;
+
+} while (Taco > 0);
+
+std::cout << "\n";
+
+return(0);
+
+}
