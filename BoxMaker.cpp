@@ -3,7 +3,6 @@
 
 //Welcome to my Box Maker Code!
 
-
 #include <iostream>
 
 int rows, columns;
