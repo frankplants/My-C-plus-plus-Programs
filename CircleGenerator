@@ -1,1 +1,17 @@
 
+
+#include <iostream>
+
+int main() {
+
+std::cout << "Welcome to the Circle Generator";
+std:cout << "What would you like the Circles diameter to be?: ";
+
+
+
+
+
+
+}
+
+
