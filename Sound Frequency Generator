@@ -1,0 +1,21 @@
+
+// Sound Frequency Generator
+// By: Frank Parsons
+
+int Frequency;
+
+int main() {
+
+std::cout << "Welcome to the Sound Frequency Generator!";
+std::cout << "Enter a frequency (1-1000)";
+std::cin >> Frequency;
+
+for(i=0;i<500;i++) {
+
+sound(Frequency);
+
+}
+
+
+
+}
