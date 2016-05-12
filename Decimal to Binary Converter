@@ -1,0 +1,24 @@
+
+//Code by Frank Parsons
+//Welcome to my Decimal to Binary Converter
+
+
+#include <iostream>
+#include <bitset>
+using namespace std;
+
+int main()
+{
+
+int number;
+
+cout<< "Welcome to the Decimal to Binary Converter!";
+cout<< "\n";
+cout<< "Enter a number in Decimal:";
+cin>>number;
+bitset <5> bin(number);
+cout<<bin;
+cout<< "\n";
+return 0;
+
+}
