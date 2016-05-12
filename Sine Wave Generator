@@ -1,0 +1,131 @@
+
+//Welcome to a Sine Wave Generator Code!
+//Not Created by me.
+
+#include <Windows.h>
+#include <math.h>
+
+#define screen_width 800
+#define screen_height 600
+#define pi 3.14159
+
+COLORREF blue = RGB(0, 0, 255);
+
+double _freq = 50;
+int _sTime = 5, _amp = 100;
+
+LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+void wavefunc(HWND, HDC);
+
+int WINAPI WinMain(HINSTANCE hInstance,
+                   HINSTANCE hPrevInstance,
+                   LPSTR lpCmdLine,
+                   int nCmdShow)
+{
+	HWND hWnd;
+	WNDCLASSEX wc;
+	HDC hDC;
+
+	ZeroMemory(&wc, sizeof(WNDCLASSEX));
+
+	wc.cbSize = sizeof(WNDCLASSEX);
+	wc.style = CS_HREDRAW | CS_VREDRAW;
+	wc.lpfnWndProc = WindowProc;
+	wc.hInstance = hInstance;
+	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wc.hIcon = (HICON)LoadImage(NULL, "C:\\Visual Studio 2010\\Icons\\Smiley.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE);
+	wc.lpszClassName = "SineWave";
+
+	RegisterClassEx(&wc);
+
+	hWnd = CreateWindowEx(NULL,
+                          "SineWave", "Wave",
+                          WS_SYSMENU,
+                          0, 45,
+                          screen_width, screen_height,
+                          NULL, NULL,
+                          hInstance,
+                          NULL);
+
+	ShowWindow(hWnd, nCmdShow);
+	hDC = GetDC(hWnd);
+
+	MSG msg;
+
+	while(TRUE)
+	{
+		while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{DispatchMessage(&msg);}
+
+		if(msg.message == WM_QUIT)
+			break;
+		
+		wavefunc(hWnd, hDC);
+	}
+
+	return msg.wParam;
+}
+
+LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch(message)
+	{
+		case WM_DESTROY:
+		{
+			PostQuitMessage(0);
+			return 0;
+		} break;
+		case WM_KEYDOWN:
+		{
+			switch (wParam)
+			{
+			case VK_NUMPAD4:
+				_freq--;
+				if(_freq < 1.0)
+					_freq = 1;
+				break;
+			case VK_NUMPAD6:
+				_freq++;
+				break;
+			case VK_NUMPAD8:
+				_amp++;
+				if(_amp > 200)
+					_amp = 200;
+				break;
+			case VK_NUMPAD2:
+				_amp--;
+				if(_amp < 0)
+					_amp = 0;
+				break;
+			case VK_SUBTRACT:
+				_sTime++;
+				if(_sTime > 50)
+					_sTime = 50;
+				break;
+			case VK_ADD:
+				_sTime--;
+				if(_sTime < 0)
+					_sTime = 0;
+				break;
+			}
+			return 0;
+		} break;
+     }
+     return DefWindowProc(hWnd, message, wParam, lParam);
+ }
+
+void wavefunc(HWND hWnd, HDC hDC)
+{
+	double full = 2 * pi * _freq;
+	static double _x = 0;
+	int _y = (sin(_x/_freq)*_amp) + 300;
+	if (_x >= full)
+		_x -= full;
+	SetPixel(hDC, 600, _y, blue);
+	ScrollWindow(hWnd, -1, 0, NULL, NULL);
+	Sleep(_sTime);
+	_x++;
+}
+
+
+
